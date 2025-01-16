@@ -3,15 +3,11 @@ include 'conn.php';
 if (isset($_GET['studentid'])) {
     
     $studentid = $_GET['studentid'];
-
-    // Fetch the existing data for the given student ID
     $sql = "SELECT * FROM students WHERE studentid = '$studentid'";
     $result = mysqli_query($conn, $sql);
 
     if (mysqli_num_rows($result) > 0) {
         $student = mysqli_fetch_assoc($result);
-
-        // Redirect to the update page with student data
         $query = http_build_query($student);
         header("Location: update2.php?$query");
         exit();
