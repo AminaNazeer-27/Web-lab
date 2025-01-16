@@ -1,9 +1,7 @@
 <?php
 include 'conn.php';
-
-
-
 if (isset($_GET['studentid'])) {
+    
     $studentid = $_GET['studentid'];
 
     // Fetch the existing data for the given student ID
