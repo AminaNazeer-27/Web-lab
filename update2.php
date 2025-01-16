@@ -1,17 +1,13 @@
 <?php
 include 'conn.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
-    // Handle form submission
     $id = $_POST['id'];
     $name = $_POST['name'];
     $semester = $_POST['semester'];
     $course = $_POST['course'];
     $gender = $_POST['gender'];
-    $hobbies = isset($_POST['hobbies']) ? implode(", ", $_POST['hobbies']) : "";
-
-    // Update student details
     $sql = "UPDATE students 
-            SET Name = '$name', Semester = '$semester', Coursename = '$course', Gender = '$gender', Hobbies = '$hobbies' 
+            SET Name = '$name', Semester = '$semester', Coursename = '$course', Gender = '$gender' 
             WHERE studentid = '$id'";
 
     if (mysqli_query($conn, $sql)) {
@@ -24,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     exit();
 }
 
-// Retrieve student data from query parameters
 if (isset($_GET['studentid'])) {
     $student = $_GET;
 } else {
@@ -55,13 +50,6 @@ if (isset($_GET['studentid'])) {
         <label for="gender">Gender:</label>
         <input type="radio" name="gender" value="male" <?php if ($student['Gender'] == 'male') echo 'checked'; ?>> Male
         <input type="radio" name="gender" value="female" <?php if ($student['Gender'] == 'female') echo 'checked'; ?>> Female<br><br>
-
-        <label for="hobbies">Hobbies:</label>
-        <?php $existingHobbies = explode(", ", $student['Hobbies']); ?>
-        <input type="checkbox" name="hobbies[]" value="sports" <?php if (in_array("sports", $existingHobbies)) echo 'checked'; ?>> Sports
-        <input type="checkbox" name="hobbies[]" value="music" <?php if (in_array("music", $existingHobbies)) echo 'checked'; ?>> Music
-        <input type="checkbox" name="hobbies[]" value="dance" <?php if (in_array("dance", $existingHobbies)) echo 'checked'; ?>> Dance
-        <input type="checkbox" name="hobbies[]" value="reading" <?php if (in_array("reading", $existingHobbies)) echo 'checked'; ?>> Reading<br><br>
 
         <button type="submit" name="submit">Update</button>
     </form>
